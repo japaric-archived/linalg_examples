@@ -1,0 +1,24 @@
+[package]
+authors = ["Jorge Aparicio <japaricious@gmail.com>"]
+name = "descent"
+version = "0.0.0"
+
+[dependencies]
+env_logger = "*"
+log = "*"
+time = "*"
+
+[dependencies.cast]
+git = "https://github.com/japaric/cast.rs"
+
+[dependencies.stats]
+git = "https://github.com/japaric/stats.rs"
+
+[dependencies.linalg]
+git = "https://github.com/japaric/linalg.rs"
+
+[dependencies.linalg_macros]
+git = "https://github.com/japaric/linalg.rs"
+
+[dependencies.lines]
+git = "https://github.com/japaric/lines.rs"
