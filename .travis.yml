@@ -1,0 +1,34 @@
+language: rust
+
+env:
+  matrix:
+    - BLAS=OpenBLAS
+    - BLAS=reference
+
+before_install:
+  # This PPA has a newer version of OpenBLAS
+  - if [[ $BLAS == 'OpenBLAS' ]]; then
+      sudo add-apt-repository ppa:staticfloat/julia-deps -y;
+    fi
+  - sudo apt-get update
+
+install:
+  - if [[ $BLAS == 'OpenBLAS' ]]; then
+      sudo apt-get install libopenblas-dev liblapack-dev;
+    else
+      sudo apt-get install libblas-dev liblapack-dev;
+    fi
+
+script:
+  - if [[ $BLAS == 'OpenBLAS' ]]; then
+      export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/openblas-base;
+    fi
+  - ./test.sh
+  - ./check-line-length.sh
+
+branches:
+  only: master
+
+notifications:
+  email:
+    on_success: never

@@ -166,7 +166,13 @@ fn normalize(mut X: SubMatMut<f64>) -> (Vec<f64>, Vec<f64>) {
 /// max_niters  integer  Maximum number of iterations
 ///
 /// -> Returns the number of iterations required to converge to a solution
-fn descent(X: SubMat<f64>, y: Col<f64>, mut theta: ColMut<f64>, alpha: f64, max_niters: u32) -> u32 {
+fn descent(
+    X: SubMat<f64>,
+    y: Col<f64>,
+    mut theta: ColMut<f64>,
+    alpha: f64,
+    max_niters: u32,
+) -> u32 {
     const TOL: f64 = 1e-5;
 
     let m = f64::from_(X.nrows());
