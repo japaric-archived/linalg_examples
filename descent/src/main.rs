@@ -20,7 +20,7 @@
 //! E      Error per observation          (m-by-1 matrix)
 //! X      Observed independent variables (m-by-n matrix)
 //! Y      Observed dependent variables   (m-by-1 matrix)
-//! m      Number of observations          (integer)
+//! m      Number of observations         (integer)
 //! theta  Parameters to estimate         (n-by-1 matrix)
 //! ```
 //!
@@ -122,12 +122,22 @@ fn main() {
 /// Evaluates the cost function for `theta`
 ///
 /// X      (m, n)
-/// y      (m, 1)  (Will be modified by this function to avoid allocations)
+/// y      (m, 1)
 /// theta  (n, 1)
-fn cost(X: SubMat<f64>, mut y: ColMut<f64>, theta: Col<f64>) -> f64 {
+/// z      (m, 1)  Auxiliary buffer to avoid allocating
+fn cost(X: SubMat<f64>, y: Col<f64>, theta: Col<f64>, mut z: ColMut<f64>) -> f64 {
     let m = f64::from_(X.nrows());
-    y.sub_assign(X * theta);
-    (&y).t() * &y / 2.0 / m
+
+    // z = y
+    z.set(y);
+
+    // z = e = y - X * theta
+    z.sub_assign(X * theta);
+
+    let z = &z;
+
+    // e * e' / 2 / m
+    z.t() * z / 2. / m
 }
 
 /// Normalizes the independent variables
@@ -183,18 +193,18 @@ fn descent(
     // Pre-allocate a column vector to avoid allocations in the loop
     let mut z = ColVec::zeros(X.nrows());
 
-    z.set(y);
-    let mut last_J = cost(X, z.slice_mut(..), theta.slice(..));
+    let mut last_J = cost(X, y, theta.slice(..), z.slice_mut(..));
     for i in 0..max_niters {
-        // z = e = y - x * theta
+        // z = y
         z.set(y);
+
+        // z = e = y - X * theta
         z.sub_assign(X * &theta);
 
         // theta = theta + alpha / m * x' * e
         theta.add_assign((alpha / m) * X.t() * &z);
 
-        z.set(y);
-        let J = cost(X, z.slice_mut(..), theta.slice(..));
+        let J = cost(X, y, theta.slice(..), z.slice_mut(..));
 
         debug!("i: {}, J: {}, theta: {:?}", i, J, theta);
 
