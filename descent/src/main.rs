@@ -141,16 +141,19 @@ fn normalize(mut X: SubMatMut<f64>) -> (Vec<f64>, Vec<f64>) {
     let mut mu = Vec::with_capacity(n);
     let mut sigma = Vec::with_capacity(n);
 
-    for col in X.cols() {
-        let sample = Sample::new(col.as_slice().unwrap());
-        let mean = sample.mean();
-        mu.push(mean);
-        sigma.push(sample.std_dev(Some(mean)));
-    }
+    for mut col in X.cols_mut() {
+        let (mean, sd) = {
+            let sample = Sample::new(col.as_slice().unwrap());
+            let mean = sample.mean();
 
-    for (mut col, i) in X.cols_mut().zip(0..) {
-        col.sub_assign(mu[i]);
-        col.div_assign(sigma[i]);
+            (mean, sample.std_dev(Some(mean)))
+        };
+
+        mu.push(mean);
+        sigma.push(sd);
+
+        col.sub_assign(mean);
+        col.div_assign(sd);
     }
 
     (mu, sigma)
