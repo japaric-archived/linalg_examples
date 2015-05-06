@@ -4,6 +4,15 @@ This crate performs a multivariate linear regression by solving the normal equat
 
 For reference a Python implementation is also provided.
 
+You can run this example with the following commands
+
+```
+$ ./fetch_data.sh
+$ less mpg.tsv
+$ cargo run [--release]
+$ python normal.py
+```
+
 # Data
 
 The data used for this example can be found [here]

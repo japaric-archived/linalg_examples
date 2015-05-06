@@ -4,6 +4,15 @@ This crate performs a multivariate linear regression using the iterative gradien
 
 For reference a Python implementation is also provided.
 
+You can run this example with the following commands
+
+```
+$ ./fetch_data.sh
+$ less mpg.tsv
+$ cargo run [--release]
+$ python descent.py
+```
+
 # Data
 
 The data used for this example can be found [here]
@@ -37,7 +46,7 @@ Python                           1             22              1             52
 # Execution time
 
 Although `Numpy` and `linalg` call the same BLAS routines, the Rust version has the edge here
-because it avoid allocating in the iterative gradient descent routine. The difference in execution
+because it avoids allocating in the iterative gradient descent routine. The difference in execution
 time is around one order of magnitude for this workload, but will vary depending on the number of
 iterations performed.
 
