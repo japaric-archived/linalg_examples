@@ -108,7 +108,7 @@ Iterations required: 2399
 
 ## Rust
 
-(There was no different between the debug and the optimized builds)
+(There was no difference between the debug and the optimized builds)
 
 ```
 $ valgrind target/debug/descent

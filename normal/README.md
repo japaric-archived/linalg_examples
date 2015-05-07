@@ -89,7 +89,7 @@ Estimated parameters: [ -1.72184346e+01  -4.93376319e-01   1.98956437e-02  -1.69
 
 ## Rust
 
-(There was no different between the debug and the optimized builds)
+(There was no difference between the debug and the optimized builds)
 
 ```
 $ valgrind target/debug/normal

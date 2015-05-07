@@ -8,12 +8,17 @@ to check that `linalg` is not slower than NumPy).
 
 Examples included:
 
+- `classifier`: [Multiclass classification] using [logistic regression] and the [one vs all]
+  strategy
 - `descent`: Multivariate [linear regression] using the iterative [gradient descent] algorithm
 - `normal`: Multivariate linear regression using the [normal equation]
 
-[linear regression]: https://en.wikipedia.org/wiki/Linear_regression
+[Multiclass classification]: http://en.wikipedia.org/wiki/Multiclass_classification
 [gradient descent]: https://en.wikipedia.org/wiki/Gradient_descent
+[linear regression]: https://en.wikipedia.org/wiki/Linear_regression
+[logistic regression]: https://en.wikipedia.org/wiki/Logistic_regression
 [normal equation]: https://en.wikipedia.org/wiki/Ordinary_least_squares#Estimation
+[one vs all]: http://en.wikipedia.org/wiki/Multiclass_classification#One-vs.-rest
 
 Each example is a cargo project.
 
