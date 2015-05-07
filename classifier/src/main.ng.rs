@@ -99,38 +99,35 @@ fn main() {
     // than during the measurements below
     (&mat![1., 2.; 3., 4.].inv() * &mat![1., 2.; 3., 4.]).eval();
 
-    let (data, y) = timeit!("Loading data", {
+    let (data, ref y) = timeit!("Loading data", {
         load("iris.csv").unwrap()
     });
 
     let (m, n) = data.size();
 
-    let mut X = Mat::ones((m, n + 1));
-    X.slice_mut((.., 1..)).set(data.slice((.., ..n)));
+    let ref mut X = Mat::ones((m, n + 1));
+    X[.., 1..] = data[.., ..n];
 
     let alpha = 0.01;
     let max_niters = 100_000;
 
-    let X = X.slice(..);
-    let y = y.slice(..);
-
-    let mut setosa = ColVec::zeros(n + 1);
+    let ref mut setosa = ColVec::zeros(n + 1);
     let iters = timeit!("\nSetosa vs rest", {
-        descent(Label::Setosa, X, y, setosa.slice_mut(..), alpha, max_niters)
+        descent(Label::Setosa, X, y, setosa, alpha, max_niters)
     });
     println!("Estimated parameters: {:?}", setosa);
     println!("Iterations required: {}\n", iters);
 
-    let mut versicolor = ColVec::zeros(n + 1);
+    let ref mut versicolor = ColVec::zeros(n + 1);
     let iters = timeit!("Versicolor vs rest", {
-        descent(Label::Versicolor, X, y, versicolor.slice_mut(..), alpha, max_niters)
+        descent(Label::Versicolor, X, y, versicolor, alpha, max_niters)
     });
     println!("Estimated parameters: {:?}", versicolor);
     println!("Iterations required: {}\n", iters);
 
-    let mut virginica = ColVec::zeros(n + 1);
+    let ref mut virginica = ColVec::zeros(n + 1);
     let iters = timeit!("Virginica vs rest", {
-        descent(Label::Virginica, X, y, virginica.slice_mut(..), alpha, max_niters)
+        descent(Label::Virginica, X, y, virginica, alpha, max_niters)
     });
     println!("Estimated parameters: {:?}", virginica);
     println!("Iterations required: {}\n", iters);
@@ -149,23 +146,23 @@ fn main() {
 /// -> Returns the number of iterations required to converge to a solution
 fn descent(
     positive: Label,
-    X: SubMat<f64>,
-    y: Col<Label>,
-    mut theta: ColMut<f64>,
+    X: &SubMat<f64>,
+    y: &Col<Label>,
+    theta: &mut Col<f64>,
     alpha: f64,
     max_niters: u32,
 ) -> u32 {
     const TOL: f64 = 1e-5;
 
     // Pre-allocate column vectors to avoid allocations in the loop
-    let mut z = ColVec::zeros(X.nrows());
-    let mut grad = ColVec::zeros(theta.nrows());
+    let ref mut z = ColVec::zeros(X.nrows());
+    let ref mut grad = ColVec::zeros(theta.nrows());
 
-    let mut last_J = cost(positive, theta.slice(..), X, y, z.slice_mut(..), grad.slice_mut(..));
+    let mut last_J = cost(positive, theta, X, y, z, grad);
     for i in 0..max_niters {
-        theta.sub_assign(alpha * &grad);
+        *theta -= alpha * grad;
 
-        let J = cost(positive, theta.slice(..), X, y, z.slice_mut(..), grad.slice_mut(..));
+        let J = cost(positive, theta, X, y, z, grad);
 
         debug!("i: {}, J: {}, theta: {:?}", i, J, theta);
 
@@ -189,13 +186,13 @@ fn descent(
 /// grad      (n, 1)  Gradient of the cost function
 fn cost(
     positive: Label,
-    theta: Col<f64>,
-    X: SubMat<f64>,
-    y: Col<Label>,
-    mut z: ColMut<f64>,
-    mut grad: ColMut<f64>,
+    theta: &Col<f64>,
+    X: &SubMat<f64>,
+    y: &Col<Label>,
+    z: &mut Col<f64>,
+    grad: &mut Col<f64>,
 ) -> f64 {
-    fn sigmoid(z: ColMut<f64>) {
+    fn sigmoid(z: &mut Col<f64>) {
         for x in z {
             *x = 1. / (1. + (-*x).exp());
         }
@@ -204,10 +201,10 @@ fn cost(
     let m = f64::from_(y.nrows());
 
     // z = h = sigmoid(X * theta)
-    z.set(X * theta);
-    sigmoid(z.slice_mut(..));
+    z[..] = X * theta;
+    sigmoid(z);
 
-    let J = y.iter().zip(z.iter()).map(|(&y, h)| {
+    let J = y.iter().zip(&*z).map(|(&y, h)| {
         if y == positive {
             -h.ln()
         } else {
@@ -216,14 +213,14 @@ fn cost(
     }).fold(0., |x, y| x + y) / m;
 
     // z = h - y
-    for (&y, z) in y.iter().zip(z.iter_mut()) {
+    for (&y, z) in y.iter().zip(z) {
         if y == positive {
             *z -= 1.
         }
     }
 
     // gradient = X' * (h - y) / m
-    grad.set(X.t() * &z / m);
+    grad[..] = X.t() * z / m;
 
     J
 }

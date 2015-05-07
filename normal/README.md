@@ -19,6 +19,17 @@ The data used for this example can be found [here]
 
 [here]: https://archive.ics.uci.edu/ml/datasets/Auto+MPG
 
+# With operator sugar
+
+`main.ng.rs` is how I expect the program to look if/when all [these changes] land in the compiler.
+I recommend you look at the diff:
+
+[these changes]: https://github.com/japaric/linalg.rs#improving-operator-sugar
+
+```
+$ [color]diff -u src/main.rs src/main.ng.rs | less -r
+```
+
 # Line count
 
 ## Rust
@@ -28,7 +39,7 @@ $ cloc src/main.rs
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Rust                             1             28             44             72
+Rust                             1             28             28             72
 -------------------------------------------------------------------------------
 ```
 
