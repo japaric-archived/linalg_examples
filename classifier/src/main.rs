@@ -205,8 +205,7 @@ fn cost(
     let m = f64::from_(y.nrows());
 
     // z = h = sigmoid(X * theta)
-    z.set(0.);
-    z.add_assign(X * theta);
+    z.set(X * theta);
     sigmoid(z.slice_mut(..));
 
     let J = y.iter().zip(z.iter()).map(|(&y, h)| {
@@ -225,8 +224,7 @@ fn cost(
     }
 
     // gradient = X' * (h - y) / m
-    grad.set(0.);
-    grad.add_assign(X.t() * &z / m);
+    grad.set(X.t() * &z / m);
 
     J
 }

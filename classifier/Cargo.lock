@@ -85,13 +85,13 @@ dependencies = [
 
 [[package]]
 name = "libc"
-version = "0.1.6"
+version = "0.1.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "linalg"
 version = "0.0.0"
-source = "git+https://github.com/japaric/linalg.rs#0c3d5ab79253bb81cfc64d903f0bfbb7a37b29ed"
+source = "git+https://github.com/japaric/linalg.rs#be5fc198f366ba9a2c402051f7f5a02c3da6afa7"
 dependencies = [
  "assign 0.0.0 (git+https://github.com/japaric/assign.rs)",
  "blas 0.0.0 (git+https://github.com/japaric/blas.rs)",
@@ -105,7 +105,7 @@ dependencies = [
 [[package]]
 name = "linalg_macros"
 version = "0.0.0"
-source = "git+https://github.com/japaric/linalg.rs#0c3d5ab79253bb81cfc64d903f0bfbb7a37b29ed"
+source = "git+https://github.com/japaric/linalg.rs#be5fc198f366ba9a2c402051f7f5a02c3da6afa7"
 
 [[package]]
 name = "lines"
@@ -117,7 +117,7 @@ name = "log"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "libc 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.1.7 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -130,7 +130,7 @@ name = "rand"
 version = "0.3.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "libc 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.1.7 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -144,6 +144,6 @@ version = "0.1.25"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "gcc 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
- "libc 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.1.7 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
