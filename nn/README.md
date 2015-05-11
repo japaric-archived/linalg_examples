@@ -2,23 +2,23 @@
 
 Training and validating a neural network (NN) for identification of hand written digits.
 
-This is a classification problem, the input is a 28x28 grayscale image, and the output is a label
-that ranges from 0 to 9.
+This is a classification problem, the input is a 28x28 grayscale image (that depicts a single
+digit) and the output is a label (an integer) that ranges from 0 to 9.
 
 The NN is a MLP (multi layer perceptron) with a single hidden layer, trained using batch processing
 and gradient descent with adaptive learning rate.
 
-The database used for training and validation can be found [here]. It consists of a training set of
-60,000 examples and a test set of 10,000 examples.
+The [MNIST] database was used for training and validation. The database consists of a training set
+of 60,000 examples and a test set of 10,000 examples.
 
-[here]: http://yann.lecun.com/exdb/mnist/
+[MNIST]: http://yann.lecun.com/exdb/mnist/
 
 To run this example, use the following commands:
 
 (Be sure to have libblas and liblapack installed)
 
 ```
-# WARNING! Downloads ~10 MB of compressed data, which then gets uncompressed to ~50 MB
+# Heads up! This downloads ~10 MB of compressed data, which then gets uncompressed to ~50 MB
 $ ./fetch_data.sh
 $ cargo run --release
 ```
@@ -36,7 +36,9 @@ Momentum: 0.9
 Storing a sample of the training set to training_set.png
 ```
 
-![training set](/nn/training_set.png)
+training_set.png
+
+![training set](/nn/training_set.png "This is what the training set looks like")
 
 ```
 The untrained NN classified the first row of the sample as:
@@ -62,7 +64,9 @@ Validation took 0.15985069 s
 Storing a sample of the misclassified digits to errors.png
 ```
 
-![errors](/nn/errors.png)
+errors.png
+
+![errors](/nn/errors.png "Digits misclassified by the NN, can *you* recongize all of them?")
 
 ```
 The first row of the sample was misclassified as:
