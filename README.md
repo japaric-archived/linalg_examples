@@ -11,6 +11,7 @@ Examples included:
 - `classifier`: [Multiclass classification] using [logistic regression] and the [one vs all]
   strategy
 - `descent`: Multivariate [linear regression] using the iterative [gradient descent] algorithm
+- `nn`: Neural network that recognizes hand written digits
 - `normal`: Multivariate linear regression using the [normal equation]
 
 [Multiclass classification]: http://en.wikipedia.org/wiki/Multiclass_classification
@@ -25,19 +26,6 @@ Each example is a cargo project.
 ## Meta
 
 Information about the system where the measurements were performed
-
-### Rust
-
-```
-$ rustc -Vv
-rustc 1.1.0-nightly (c42c1e7a6 2015-05-02) (built 2015-05-02)
-binary: rustc
-commit-hash: c42c1e7a678a27bb63c24fb1eca2866af4e3ab7a
-commit-date: 2015-05-02
-build-date: 2015-05-02
-host: x86_64-unknown-linux-gnu
-release: 1.1.0-nightly
-```
 
 ### Python
 
