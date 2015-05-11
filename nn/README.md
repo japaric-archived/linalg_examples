@@ -36,7 +36,7 @@ Momentum: 0.9
 Storing a sample of the training set to training_set.png
 ```
 
-![training set](/training_set.png)
+![training set](/nn/training_set.png)
 
 ```
 The untrained NN classified the first row of the sample as:
@@ -62,7 +62,7 @@ Validation took 0.15985069 s
 Storing a sample of the misclassified digits to errors.png
 ```
 
-![errors](/errors.png)
+![errors](/nn/errors.png)
 
 ```
 The first row of the sample was misclassified as:
