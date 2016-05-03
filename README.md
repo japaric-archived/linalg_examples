@@ -1,3 +1,13 @@
+# Status
+
+Currently **INACTIVE** as this is part of my [linalg.rs] project.
+
+[linalg.rs]: https://github.com/japaric/linalg.rs
+
+-- @japaric, 2016-05-02
+
+---
+
 # `linalg` examples
 
 The main goal of these examples is to showcase `linalg` API. A secondary goal is to compare the
